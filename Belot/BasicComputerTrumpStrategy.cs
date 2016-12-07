@@ -11,7 +11,7 @@ namespace Belot
 
         public virtual Trump RiseTrump(IEnumerable<Card> availableCards, Trump currentTrump)
         {
-            var trumpsAbovePercentForRise = new Dictionary<Trump, int>();
+            var trumpsAbovePercentForRise = new Dictionary<Trump, int>(); 
 
             foreach (Trump possible in Trumps.All)
             {

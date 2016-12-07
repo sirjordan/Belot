@@ -54,7 +54,7 @@ namespace Belot
 
         public override bool Equals(object obj)
         {
-            var other = (Trump)obj;
+            var other = obj as Trump;
             if (other != null)
             {
                 return this.Power == other.Power;

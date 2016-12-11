@@ -9,6 +9,7 @@ namespace Belot.Clients
         private ConsoleColor normalColor = ConsoleColor.Yellow;
         private ConsoleColor importantColor = ConsoleColor.Green;
         private HumanPlayer player;
+        private Table table;
 
         public Deck Deck { get; protected set; }
 
@@ -21,7 +22,7 @@ namespace Belot.Clients
         {
             WriteNormal("Enter player name: ");
             string playerName = Console.ReadLine();
-            this.player = new HumanPlayer(playerName);
+            this.player = new HumanPlayer(playerName ?? "Player");
 
             IComputerTrumpStrategy strategy = new BasicComputerTrumpStrategy();
             var team1 = new Team(player, new ComputerPlayer(strategy));
@@ -30,10 +31,13 @@ namespace Belot.Clients
             this.player.ShouldRiseTrump += Player_ShouldRiseTrump;
 
             var table = new Table(this.Deck, team1, team2);
+            this.table = table;
+
+            table.PlayerRisedTrump += Table_PlayerRisedTrump;
 
             table.StartGame();
         }
-
+        
         private Trump Player_ShouldRiseTrump()
         {
             WriteNormal("---------------------");
@@ -46,6 +50,10 @@ namespace Belot.Clients
 
             return rised;
         }
+        private void Table_PlayerRisedTrump(Player arg1, Trump arg2)
+        {
+            WriteNormal(string.Format("{0} rised {1}", arg1.Name, arg2.Name));
+        }
         private Trump ShowRiseTrump()
         {
             WriteSelection(Trumps.All.First().Name);
@@ -55,7 +63,8 @@ namespace Belot.Clients
             }
 
             Console.ReadLine();
-            throw new NotImplementedException();
+
+            return Trump.Clubs;
         }
         private void WriteNormal(string text)
         {

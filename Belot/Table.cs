@@ -1,4 +1,5 @@
 ﻿using Belot.Helpers;
+using System;
 using System.Linq;
 
 namespace Belot
@@ -6,7 +7,8 @@ namespace Belot
     public class Table
     {
         private byte _currentPlayerIndex;
-        
+
+        public event Action<Player, Trump> PlayerRisedTrump;
         public Deck Deck { get; private set; }
         public Player[] Players
         {
@@ -86,6 +88,8 @@ namespace Belot
                         this.Trump = rised;
                     }
                 }
+
+                this.PlayerRisedTrump(player, rised);
             }
 
             if (this.Trump == null)

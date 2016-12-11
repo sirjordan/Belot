@@ -47,8 +47,10 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardColor.cs" />
     <Compile Include="CardNumber.cs" />
+    <Compile Include="Clients\ConsoleClient.cs" />
     <Compile Include="ComputerPlayer.cs" />
     <Compile Include="HumanPlayer.cs" />
+    <Compile Include="Interfaces\IClient.cs" />
     <Compile Include="Interfaces\IComputerTrumpStrategy.cs" />
     <Compile Include="Trump.cs" />
     <Compile Include="Deck.cs" />

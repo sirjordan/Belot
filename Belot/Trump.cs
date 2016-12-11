@@ -19,6 +19,10 @@ namespace Belot
         }
         public static bool operator !=(Trump t1, Trump t2)
         {
+            if (object.ReferenceEquals(t1, null) && object.ReferenceEquals(t2, null))
+            {
+                return false;
+            }
             if (object.ReferenceEquals(t1, null) || object.ReferenceEquals(t2, null))
             {
                 return true;

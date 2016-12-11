@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Belot
 {
-    public class Trumps : IEnumerable<Trump>
+    public sealed class Trumps : IEnumerable<Trump>
     {
         private static readonly List<Trump> _trumps = new List<Trump>
         {
@@ -14,6 +14,8 @@ namespace Belot
             Trump.NoTrump,
             Trump.AllTrump,
         };
+
+        private Trumps() { }
 
         public static Trumps All
         {

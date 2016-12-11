@@ -13,6 +13,5 @@ namespace Belot
             var client = new ConsoleClient(deck);
             client.BeginGame();
         }
-        
     }
 }

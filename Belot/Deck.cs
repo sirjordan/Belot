@@ -20,7 +20,6 @@ namespace Belot
                 .OrderBy(c => Guid.NewGuid())
                 .ToList());
         }
-
         public Card PullCard()
         {
             if (this.Cards.Count > 0)
@@ -35,7 +34,6 @@ namespace Belot
                 throw new InvalidOperationException("Cards is empty! Cant pull cards from an empty deck.");
             }
         }
-
         public IEnumerable<Card> PullCards(byte count)
         {
             for (int i = 0; i < count; i++)

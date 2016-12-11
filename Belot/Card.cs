@@ -15,7 +15,6 @@
         {
             return string.Format("{0} of {1}", Number, Color);
         }
-
         public int GetCardScorePoints(Trump trump)
         {
             int score;

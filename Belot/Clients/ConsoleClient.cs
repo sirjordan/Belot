@@ -52,19 +52,41 @@ namespace Belot.Clients
         }
         private void Table_PlayerRisedTrump(Player arg1, Trump arg2)
         {
-            WriteNormal(string.Format("{0} rised {1}", arg1.Name, arg2.Name));
+            if (arg2 != null)
+            {
+                WriteNormal(string.Format("{0} rised {1}", arg1.Name, arg2.Name));
+            }
+            else
+            {
+                WriteNormal(string.Format("{0} passes", arg1.Name));
+            }
         }
         private Trump ShowRiseTrump()
         {
-            WriteSelection(Trumps.All.First().Name);
-            foreach (var possible in Trumps.All.Skip(1))
+            WriteImportant("[0] Pass");
+
+            var all = Trumps.All.ToArray();
+            for (int i = 0; i < all.Count(); i++)
             {
-                WriteImportant(possible.Name);
+                WriteImportant(string.Format("[{0}] {1}", i + 1, all[i].Name));
             }
 
-            Console.ReadLine();
-
-            return Trump.Clubs;
+            int trumpNo;
+            if (int.TryParse(Console.ReadLine(), out trumpNo))
+            {
+                try
+                {
+                    return all[trumpNo - 1];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
         private void WriteNormal(string text)
         {

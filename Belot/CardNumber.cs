@@ -4,8 +4,8 @@ namespace Belot
 {
     public class CardNumber
     {
-        public const byte MaxCardNumber = 13;
-        public const byte MinCardNumebr = 1;
+        public static readonly byte MaxCardNumber = 13;
+        public static readonly byte MinCardNumebr = 1;
         public static readonly byte[] SkippedCardNumbers = new byte[] { 2, 3, 4, 5, 6 };
 
         public byte Number { get; private set; }

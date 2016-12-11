@@ -36,13 +36,26 @@ namespace Belot.Clients
 
         private Trump Player_ShouldRiseTrump()
         {
+            WriteNormal("---------------------");
             WriteNormal("You have the following cards: ");
             WriteImportant(string.Join("\n\r", this.player.Cards.Select(x => x.ToString())));
             WriteNormal("---------------------");
             
             WriteNormal("Please rize trump:");
+            Trump rised = ShowRiseTrump();
+
+            return rised;
+        }
+        private Trump ShowRiseTrump()
+        {
+            WriteSelection(Trumps.All.First().Name);
+            foreach (var possible in Trumps.All.Skip(1))
+            {
+                WriteImportant(possible.Name);
+            }
+
             Console.ReadLine();
-            return Trump.NoTrump;
+            throw new NotImplementedException();
         }
         private void WriteNormal(string text)
         {
@@ -53,7 +66,13 @@ namespace Belot.Clients
         {
             Console.ForegroundColor = this.importantColor;
             Console.WriteLine(text);
-            Console.ForegroundColor = this.normalColor;
+        }
+        private void WriteSelection(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.WriteLine(text);
+            Console.BackgroundColor = ConsoleColor.Black;
         }
     }
 }

@@ -62,6 +62,15 @@ namespace Belot
             if (this._initialDealSet)
             {
                 PushPlayersToRiseTrump();
+
+                if (this.Trump != null)
+                {
+                    // TODO: Set secondary deal
+                }
+                else
+                {
+                    // TODO: Shuffle again and deal again (e.g new game)
+                }
             }
             else
             {
@@ -100,11 +109,6 @@ namespace Belot
 
                 this.PlayerRisedTrump(this.CurrentPlayer, rised);
                 NextPlayerTurn();
-            }
-
-            if (this.Trump == null)
-            {
-                // TODO: Shuffle again and deal again (e.g new game)
             }
         }
         private void NextPlayerTurn()

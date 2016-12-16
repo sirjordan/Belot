@@ -6,6 +6,7 @@ namespace Belot
     {
         public string Name { get; protected set; }
         public ISet<Card> Cards { get; set; }
+        public Player TeamMate { get; set; }
         
         public Player(string name)
         {

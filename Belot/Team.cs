@@ -20,6 +20,9 @@ namespace Belot
         {
             this._player1 = player1;
             this._player2 = player2;
+
+            this._player1.TeamMate = this._player2;
+            this._player2.TeamMate = this._player1;
         }
     }
 }

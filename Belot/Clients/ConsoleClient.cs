@@ -1,5 +1,6 @@
 ﻿using Belot.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Belot.Clients
@@ -35,16 +36,15 @@ namespace Belot.Clients
 
             table.PlayerRisedTrump += Table_PlayerRisedTrump;
 
+            table.SetInitialDeal();
+
+            ShowAvilableCards(this.player.Cards);  
+
             table.StartGame();
         }
         
         private Trump Player_ShouldRiseTrump()
         {
-            WriteNormal("---------------------");
-            WriteNormal("You have the following cards: ");
-            WriteImportant(string.Join("\n\r", this.player.Cards.Select(x => x.ToString())));
-            WriteNormal("---------------------");
-            
             WriteNormal("Please rize trump:");
             Trump rised = ShowRiseTrump();
 
@@ -88,6 +88,14 @@ namespace Belot.Clients
                 return null;
             }
         }
+        private void ShowAvilableCards(IEnumerable<Card> cards)
+        {
+            WriteNormal("---------------------");
+            WriteNormal("You receive the following cards: ");
+            WriteImportant(string.Join("\n\r", cards.Select(x => x.ToString())));
+            WriteNormal("---------------------");
+        }
+
         private void WriteNormal(string text)
         {
             Console.ForegroundColor = this.normalColor;

@@ -31,13 +31,20 @@ namespace Belot
 
             if (trumpsAbovePercentForRise.Count > 0)
             {
-                // Returns the highest percent trump from this cards
+                // Highest percent trump from this cards
                 Trump rised = trumpsAbovePercentForRise
                     .OrderByDescending(x => x.Value)
                     .First()
                     .Key;
 
-                return rised;
+                if (rised > currentTrump)
+                {
+                    return rised;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {

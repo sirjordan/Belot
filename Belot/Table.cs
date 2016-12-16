@@ -7,6 +7,7 @@ namespace Belot
     public class Table
     {
         private byte _currentPlayerIndex;
+        private bool _initialDealSet;
 
         public event Action<Player, Trump> PlayerRisedTrump;
         public Deck Deck { get; private set; }
@@ -35,26 +36,12 @@ namespace Belot
             this.Deck = deck;
             this.Team1 = team1;
             this.Team2 = team2;
-            this._currentPlayerIndex = 1;
+            this._currentPlayerIndex = (byte)(new Random()).Next(0, this.Players.Length);
             this.Trump = null;
-
-            SetInitialDeal();
+            this._initialDealSet = false;
         }
         
-        public void SetSecondaryDeal()
-        {
-            for (int i = 0; i < this.Players.Length; i++)
-            {
-                var threeCards = this.Deck.PullCards(3);
-                this.Players[i].Cards.AddRange(threeCards);
-            }
-        }
-        public void StartGame()
-        {
-            PushPlayersToRiseTrump();
-        }
-        
-        private void SetInitialDeal()
+        public void SetInitialDeal()
         {
             for (int i = 0; i < this.Players.Length; i++)
             {
@@ -67,12 +54,34 @@ namespace Belot
                 var twoCards = this.Deck.PullCards(2);
                 this.Players[i].Cards.AddRange(twoCards);
             }
+
+            this._initialDealSet = true;
         }
+        public void StartGame()
+        {
+            if (this._initialDealSet)
+            {
+                PushPlayersToRiseTrump();
+            }
+            else
+            {
+                throw new InvalidOperationException("Game must be started after SetInitialDeal() is called.");
+            }
+        }
+        public void SetSecondaryDeal()
+        {
+            for (int i = 0; i < this.Players.Length; i++)
+            {
+                var threeCards = this.Deck.PullCards(3);
+                this.Players[i].Cards.AddRange(threeCards);
+            }
+        }
+
         private void PushPlayersToRiseTrump()
         {
-            foreach (var player in this.Players)
+            for (int i = 0; i < this.Players.Length; i++)
             {
-                Trump rised = player.RiseTrump(this.Trump);
+                Trump rised = this.CurrentPlayer.RiseTrump(this.Trump);
 
                 if (rised != null)
                 {
@@ -89,12 +98,21 @@ namespace Belot
                     }
                 }
 
-                this.PlayerRisedTrump(player, rised);
+                this.PlayerRisedTrump(this.CurrentPlayer, rised);
+                NextPlayerTurn();
             }
 
             if (this.Trump == null)
             {
                 // TODO: Shuffle again and deal again (e.g new game)
+            }
+        }
+        private void NextPlayerTurn()
+        {
+            this._currentPlayerIndex++;
+            if (this._currentPlayerIndex >= this.Players.Length)
+            {
+                this._currentPlayerIndex = 0;
             }
         }
     }
